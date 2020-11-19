@@ -2,18 +2,18 @@
 // redefine variables to less scary names //////////////
 
 // deprecated (see also legacy.h)
-#define ExitTime	g->nExitTime
-#define TradeExitTime	g->tr->nExitTime
-#define Symbol		g->asset->sSymbol
-#define Weekend	g->nWeekend
 #define Broker			g->sBroker
 #define Account		g->sAccount
 #define AccountName	g->sAccountName
-#define assetSwitch	assetSelect
+#define LoopNum1	g->nLoop[0]
+#define LoopNum2	g->nLoop[1]
+#define FactorList	g->sFactorList
+#define Symbol		g->asset->sSymbol
 
 // g struct
 #define PlotLabels g->nPlotLabels
 #define PlotScale g->nPlotScale
+#define PlotText	g->nPlotText
 #define PlotBorder g->nPlotBorder
 #define PlotWidth g->nPlotWidth
 #define PlotHeight1 g->nPlotHeight1
@@ -135,8 +135,8 @@
 #define MaxRequests	g->vMaxRequests
 #define HWnd		g->hWnd
 
-#define LoopNum1	g->nLoop[0]
-#define LoopNum2	g->nLoop[1]
+#define Itor1		(g->nLoop[0]-1)
+#define Itor2		(g->nLoop[1]-1)
 #define Loop1		g->pLoopPar[0]
 #define Loop2		g->pLoopPar[1]
 #define Cycle1		g->nLoopCycle[0]
@@ -152,6 +152,8 @@
 #define Pin			g->nPin
 #define NumAssetsListed g->nAssets
 #define NumAssetsUsed g->numAssets
+#define Parameters (g->pParameters)
+#define BestResult g->vObjectiveBest
 
 #define Detrend	g->nDetrend
 #define FuzzyRange g->vFuzzyRange
@@ -183,6 +185,7 @@
 #define DayOffset	g->tDayOffset
 #define ExpiryTime g->nExpiryTime
 #define TradeRate g->nTradeRate
+#define ExitCode	g->nExitCode
 
 #define Capital	g->vCapital
 #define Interest	g->vInterest
@@ -198,7 +201,7 @@
 
 #define Assets			(g->pAssets)
 #define ThisAsset		g->asset
-#define Asset			g->asset->sName
+#define Asset			(g->asset->sName)
 #define AssetBar		g->asset->nBar
 #define AssetFrame	g->asset->nFrame
 #define AssetZone		g->asset->nZone
@@ -215,6 +218,7 @@
 #define SymbolLive	g->asset->sSymbolLive
 #define SymbolHist	g->asset->sSymbolHist
 #define Component		g->statLong->nComponent
+#define SeriesBuffer	g->pSeriesBuffer
 
 #define AssetMode		g->asset->flags
 #define AssetO			(g->asset->pOpen)
@@ -228,10 +232,9 @@
 #define PatternPF		g->vAdvise[2]
 
 #define AssetList		g->sAssetList
-#define FactorList	g->sFactorList
-#define Algo			g->sAlgo
+#define Factors		g->sFactorList
+#define Algo			(g->sAlgo)
 #define Script			g->sScript
-#define Factors		g->sFactors
 #define History		g->sHistory
 #define WebFolder		g->sWebFolder
 #define ZorroFolder	g->sZorroFolder
@@ -372,9 +375,10 @@
 #define TradeUnderlying	((var)g->tr->fUnl)
 #define TradeRoll			g->tr->fRoll
 #define TradeVar			(g->tr->Skill)
+#define TradeStr			(string)&(g->tr->Skill)
 #define TradeParameter	(g->tr->fArg)
 #define TradeDir			ifelse(TradeIsShort,-1,1)
-#define TradeStatus		((STATUS*)(g->tr->status))
+#define TradeStatus		((STATUS*)(g->tr->algo))
 #define TradeAlgo			TradeStatus->sAlgo
 #define TradeAsset		TradeStatus->asset->sName
 #define TradeMarginCost	g->tr->fMarginCost
@@ -390,12 +394,15 @@
 #define break_trades		if(!forTrade(64)) break	// abort loop
 #define used_assets		forAsset(0); g->nItor; forAsset(1)
 #define listed_assets	forAsset(2); g->nItor; forAsset(1+2)
+#define break_assets		if(!forAsset(64)) break	// abort loop
 #define all_algos			forStatus(0); g->nItor; forStatus(1)
+#define break_algos		if(!forStatus(64)) break	// abort loop
 #define Itor				(g->nItor-1)
 
 #define setf(mode,flag)	mode |= (flag)
 #define resf(mode,flag)	mode &= ~(flag)
 #define isf(mode,flag)	(mode & (flag))
+#define swap(a,b)			g->vTemp = a; a = b; b = g->vTemp
 
 #define TradeFlag(flag)	((g->tr->flags&(flag)) != 0)
 #define TradeIs(flag)	((g->tr->flags&(flag)) == (flag))

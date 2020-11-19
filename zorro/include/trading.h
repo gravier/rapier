@@ -22,8 +22,8 @@ typedef long function;
 
 /////////////////////////////////////////////////////////////////////
 // constant limits (don't change!)
-#define NAMESIZE		16
-#define NAMESIZE2		40
+#define NAMESIZE		16		// asset and algo names
+#define NAMESIZE2		40		// broker and account names
 #define NUM_SKILLS	8
 #define NUM_SKILLS2	16
 #define NUM_RESULTS	20
@@ -38,13 +38,13 @@ typedef long function;
 // trading structs
 typedef struct T1
 {
-	DATE	time;	// time stamp, GMT
+	DATE	time;	// GMT timestamp, OLE datetime, 0.5 ms precision
 	float fVal;	// positive for ask, negative for bid	
 } T1; // single-stream tick, .t1 file content
 
 typedef struct T2
 {
-  DATE  time; // timestamp in OLE date/time format
+  DATE  time; // GMT timestamp
   float fVal; // price quote, positive for ask and negative for bid
   float fVol; // volume / size
 } T2; // order book data
@@ -57,15 +57,15 @@ typedef struct THL
 
 typedef struct T6
 {
-	DATE	time;	
+	DATE	time;			// GMT timestamp of fClose
 	float fHigh, fLow;	// (f1,f2)
 	float fOpen, fClose;	// (f3,f4)	
-	float fVal, fVol; // optional data, like spread and volume (f5,f6)
+	float fVal, fVol; // additional data, f.i. spread and volume (f5,f6)
 } T6; // 6-stream tick, .t6 file content
 
 typedef struct CONTRACT
 {
-	DATE	time;			// or trading class
+	DATE	time;			// live: trading class string
 	float fAsk, fBid; // premium without multiplier (f1,f2)
 	float fVal;			// script dependent - bid volume, IV, delta... (f3)
 	float fVol;			// trade volume, ask volume, or open interest (f4)
@@ -91,6 +91,12 @@ typedef struct DATA
 	int	start,end;	// first and last plotted data in the array
 	var*	Data;			// data array
 } DATA;
+
+typedef struct PARAMETER	// parameter list
+{
+	var Value,Min,Max,Step,Best;
+	char Name[40];
+} PARAMETER;
 
 typedef struct DATASET
 {
@@ -130,8 +136,6 @@ typedef struct ASSET
 	var	tAsk,tBid;		// time stamp of last quote
 	var	vEntryLimit,vExitLimit;	// for adaptive algos
 	var	vWinPayout,vLossPayout;	// payouts in percent for binary trading
-	var	vBarAvg;			// Average price of one bar, intermediate value
-	var	vBack[6];		// price backup for intrabar simulation
 	var	*pOpen,*pClose,*pHigh,*pLow,*pPrice;	// price history data array
 	var	*pVal,*pVol;	// additional price data lists, f.i. spread and volume
 	CONTRACT *pContracts;	// contract chain
@@ -168,6 +172,8 @@ typedef struct ASSET
 	int	nTradeCounter;	// BrokerTrade update counter for g->nTradeRate
 	void	*Cache;			// Pointer for data cache, NULL when dirty
 	int	nCache;			// Number of memory pool
+	var	vBarAvg,vValAvg,vVolAvg;	// Average price, vol, val of one bar, intermediate value
+	var	vBack[8];		// price backup for intrabar simulation
 } ASSET;
 
 typedef struct TRADE
@@ -209,14 +215,15 @@ typedef struct TRADE
 	float	fCommission;	// commission at entering the trade
 	DWORD	flags2;		// internal flags
 	int	nLotsTarget;	// original lots
-	int	pad[2];
+	int	nAttempts;	// close attempts counter
+	int	pad[1];
 // saved until this position; change "TRD" header when changed
-	void	*status;		// trade STATUS 
+	void	*algo;		// trade ALGO 
 	void	*manage;		// trade management function pointer
 	var	*dSignals;	// pointer to advise parameters; uuid in live trading
 	float fLastStop;	// for updating the stop
-	float fSimProfit;	// simulated profit, externally set 
-	int	nBarLast;	// bar number of last trail step
+	float fPad[1]; 
+	int	nBarLast;	// bar number of last trail step  
 } TRADE;
 
 #define TR_LONG		0
@@ -226,11 +233,13 @@ typedef struct TRADE
 #define TR_EXPIRED	(1<<3)	// option or future expired
 #define TR_WAITSELL	(1<<4)	// close position at the next tick
 #define TR_WAITBUY	(1<<5)	// pending trade 
+//#define TR_UNUSED	(1<<6)	// 
 #define TR_SUSPEND	(1<<7)	// suspend trade function
 #define TR_EVENT		(1<<8)	// trade function was called by enter/exit event
 #define TR_MISSEDENTRY	(1<<10)	// missed the entry limit in the last bar
 #define TR_MISSEDEXIT	(1<<11)	// missed the exit for some reason -> retry
 #define TR_NOTFILLED	(1<<12)	// Trade not filled -> adapt limit and retry
+#define TR_SIMULATED	(1<<12)	// Don't calculate result
 #define TR_NONET		(1<<14)	// Don't open a net trade yet
 #define TR_NET			(1<<15)	// Pool trade
 #define TR_PHANTOM	(1<<16)	// Phantom trade 
@@ -249,8 +258,11 @@ typedef struct TRADE
 #define TR_BAR			(1<<29)	// run TMF on any bar only, not any tick
 #define TR_REVERSED	(1<<30)  // indicate exit by reversal
 
+#define TR_AON			1			// TradeMode all-or-nothing
+#define TR_FILLED		(1<<1)	// TradeMode, assume complete fill
+
 ///////////////////////////////////////////////////////////////
-// trade specific performance statistics (per lot)
+// algo specific parameters & statistics
 typedef struct STATUS { 
 	var	vSkippedMargin;	// margin accumulation of skipped trades
 	var	vWin,vLoss;			// gross wins and losses
@@ -270,10 +282,10 @@ typedef struct STATUS {
 	int	nComponent;			// component number
 	DWORD	pad[1];
 	var	vPad[4];
-	var	Skill[NUM_SKILLS];	// general purpose variables for money managemement
+	var	Skill[NUM_SKILLS];	// general purpose variables
 	var	Result[NUM_RESULTS];	// last 20 trade results
 	char	sAlgo[NAMESIZE];	// algo identifier
-// save until this position
+// saved until this position
 	var	vTrainPF;			// training profit factor
 	var	vOptimalF;			// OptimalFLong / OptimalFShort
 	var	vOptimalF2;			// OptimalF (short), R2 (long)
@@ -293,7 +305,7 @@ typedef struct STATUS {
 	var*	pCurve;				// component equity/balance curve
 } STATUS;
 
-// overall performance statistics
+// overall performance statistics (averaged over sample cycles)
 typedef struct PERFORMANCE
 {
 	var	vWin,vLoss;			// gross wins and losses
@@ -306,7 +318,7 @@ typedef struct PERFORMANCE
 	var	vMarginMax;			// maximum margin 
 	var	vRiskMax;			// maximum risk 
 	var	vVolume;				// total trade volume
-	var	vObjective;			// result of objective function
+	var	vObjective;			// current objective() result 
 	var	vR2;					// coefficient of determination
 	var	vMean;				// average simple return per bar
 	var	vStdDev;				// standard deviation of simple returns
@@ -340,7 +352,7 @@ typedef struct PERFORMANCE
 	int	nEquityValleyBalanceBar; //.
 	DATE	tSessionEnd;		// time of session exit, for continuing statistics
 	int	nSessionEndBar;	// bar number of the last bar
-	long	pad;
+	int	nPad;
 	var	vSemiDev;			// semideviation
 } PERFORMANCE;
 
@@ -392,7 +404,7 @@ typedef struct GLOBALS
 	int	nTrainMode;		// optimize mode
 	int	nFill;			//. order fill mode
 	int	nTickSize;		// T6 or THL
-	int	nMinutesPerDay;	// minimum trading time per day, default = 60*6*5/7 ~ 256
+	int	nMinutesPerDay;	// minimum trading time per day, default = 360
 	DATE	tNow;				// for time/date functions
 	var	vSpreadFactor;	// 0.5 = open at mid price
 	int	nStartMarket,nEndMarket; // market hours
@@ -502,42 +514,44 @@ typedef struct GLOBALS
 	int	nFirstBar;	// first bar that lies at or after g->nStartDate
 	int	numBars;		// total number of bars of the simulation, depends on nBarPeriod
 	int	numAllocBars;	// size of the bar, plot, and price arrays
-	int	numMinutes;	// total minutes of the test frame	
+	int	numMinutes;	//. total minutes of the test frame	
 	int	nTick;		// current tick number in trade management functions
 	int	nBar;			// current bar number
 	int	nTotalCycle;	// current cycle
-	int	nSampleCycle;	// current oversampling cycle number	
+	int	nSampleCycle;	//. current oversampling cycle number	
 	int	nParLoop;	// current optimize call number within one loop
 	int	nParTotal;	// current optimize call number of all loops
 	int	numParTrain;	// number of parameters trained per loop
-	int	nStepCycle;	// current optimize step
+	int	nStepCycle;	//. current optimize step
 	int	nParCycle;	// current parameter optimizing run, 1..numParTrain
-	int	nOptCycle;	// when parameters are optimized twice
+	int	nOptCycle;	// optimization sub-cycle
 	int	nWFOCycle;	// current WFO cycle
-	int	nFrameStart;	// start bar of the active data frame
+	int	nFrameStart;	//. start bar of the active data frame
 	int	numFrameBars;	// size of the active data frame in bars
 	int	numLoops[2];	// total number of loops in training mode
-	int	nLoop[2];		// current loop argument number (starting with 1)
+	int	nLoop[2];		//.. current loop argument number (starting with 1)
 	int	nLoopCycle[2];	// trained loop argument number, or 0 for whole loop
-	void*	pLoopPar[2];	// current loop parameter
+	void*	pLoopPar[2];	//.. current loop parameter
 	int	nSelectWFO;		// WFO cycle to select, or 0 for all cycles
 	int	nLogCycle;		// Log trades of a certain train cycle; format WLLPS (Walk Loop0 Loop1 Par Step)
-	BOOL	bDoStep,bDoLoop;	// TRUE during optimization
+	BOOL	bDoStep,bDoLoop;	//.. TRUE during optimization
 	int	numAssets;		// number of assets used in the script
-	var	vParameter;		// current optimize value
-	var	vProfitMax,vProfitMin;	// maximum and minimum result of all bar cycles
+	var	vParameter;		//. current optimize value
+	var	vObjectiveBest;	// best result from objective()
+	var	vPad61;
 	int	nWFOStart;		// bar number of the current WFO cycle start
 	int	nTrainFrame,nTestFrame;		// size of the training/test period in bars
-	int	nModels;			// number of models for prediction
+	int	nModels;			//. number of models for prediction
 	int	nUserBar;		// return value from bar() function
-	int	nItor;			// inside a for(trade) loop
+	int	nItor;			// counter of a for(trade) loop
 	int	numPhantom;		// number of phantom trades
-	int	numRejected;	// number of rejected trades
+	int	numRejected;	//. number of rejected trades
 	int	nComponents;	// component counter
 	int	nFrameEnd;		// last bar of the current frame
-	int	nOrderRow;
-	long	pad6[10];
+	int	nOrderRow;		// row nuber in order list
+	long	pad62[9];
 
+	var	*pSeriesBuffer;	// pointer of the last/next series
 	var	*pPrevCurve;	// daily balance/equity curve from previous backtest
 	long	nPrevLength;	// length of the balance/equity curve
 	T6		*pTick;			// current tick for TMF and tick functions
@@ -549,8 +563,8 @@ typedef struct GLOBALS
 	string sParameters; // content of the parameter file
 	string sFactors;	// content of the OptimalF factor file
 	string sRules;		// content of the rule file
-	var	*pParameters;	// array of parameters from the optimize loop
-	var	*pParLoop;	// parameter list in current loop
+	var	*pParTotal;	// parameter values of all components
+	var	*pParLoop;	// parameter values of current component
 	void	*pRules;		// compiled advise rules
 
 	TRADE	*tr;			// current trade in trade function or enumeration
@@ -584,7 +598,8 @@ typedef struct GLOBALS
 	int*	nHolidays;	// holiday list
 	const char *sAccountName;	// from the account list
 	var*	pShape;		// price curve bending array
-	long	pad7[14];
+	PARAMETER* pParameters;	// list of parameters in a training run
+	long	pad7[13];
 
 // chart/log parameters (r/w)
 	int	nPlotLabels; // # of x axis labels to skip in histograms
@@ -604,14 +619,16 @@ typedef struct GLOBALS
 	int	nPlotPeriod;	// Chart update period in minutes
 	int	nPlotMode;
 	int	nPlotStart;		// start bar of the plot
-	int	nTimePerBar;	// play speed
+	int	nTimePerBar;	// playback speed, ms per bar
 
 	int	nPopulation;	// for genetic optimization 
 	int	nGenerations;
 	int	nMutationRate;
 	int	nCrossoverRate;
 	int	nSampleOffset;	// sample cycle offset in bars
-	long	pad8[10];
+	int	nPlotText;		// Text zoom threshold
+	int	nExitCode;		// Exit code
+	long	pad8[8];
 
 	DWORD	nPin;
 	DWORD	nSaveMode;	// load/save flags
@@ -628,10 +645,10 @@ typedef struct GLOBALS
 	int	nPriceType;	// current price type, 4 = suppress requests
 	ASSET* PrevAsset;	// Global asset in a trade loop
 	DWORD	flags2;		// more internal flags
-	DWORD	dwFlags2;		// more mode switches
+	DWORD	dwFlags2;	// more mode switches
 	DWORD	flags3;		// more internal flags
-	
-	long	pad9[8];
+	var	vTemp;		// for macros
+	long	pad9[6];
 
 // Indicator return variables
 	var vAroonDown,vAroonUp;
@@ -659,9 +676,9 @@ typedef struct GLOBALS
 
 //////////////////////////////////////////////////////////////////////
 #ifdef _DEBUG
-#define SCRIPT_VERSION	2308
+#define SCRIPT_VERSION	2310
 #else
-#define SCRIPT_VERSION	260
+#define SCRIPT_VERSION	262
 #endif
 #ifndef NO_DEFINES
 
@@ -736,13 +753,15 @@ typedef struct GLOBALS
 #define SCREENSAVER	FLAG(1)	// don't suspend power management 
 #define CACHE			FLAG(2)	// use cache for unlimited asset history
 #define BUSY			FLAG(3)	// broker API or script function busy 
+#define SLIDERS		FLAG(4)	// slider was moved
+#define NOWATCH		FLAG(5)	// ignore watch() statements
 
-#define SAV_TRADES	FLAG(10)	// save modes
-#define SAV_SLIDERS	FLAG(11)
-#define SAV_ALGOVARS	FLAG(12)
-#define SAV_STATS		FLAG(13)
-#define SAV_BACKUP	FLAG(14)
-#define SAV_HTML		FLAG(15)
+//#define SAV_TRADES	FLAG(10)	// save modes
+//#define SAV_SLIDERS	FLAG(11)
+//#define SAV_ALGOVARS	FLAG(12)
+//#define SAV_STATS		FLAG(13)
+//#define SAV_BACKUP	FLAG(14)
+//#define SAV_HTML		FLAG(15)
 
 // defines for functions and parameters
 #define NOW		-999999
@@ -752,8 +771,8 @@ typedef struct GLOBALS
 #define DELAYED	3
 #define HFT			8
 #define DIAG		8
-#define UPDATE		(1<<5)
 #define ALERT		(1<<4)
+#define UPDATE		(1<<5)
 #define LOGMSG		(1<<9)	// show log in message window
 
 #define NEURAL		(1<<20)	// use external AI
@@ -805,7 +824,6 @@ typedef struct GLOBALS
 #define RECIPROCAL (1<<7)
 #define RANDOMWALK (1<<8)
 #define SHAPE		(1<<9)
-#define KELLY		(1<<12)	// Kelly factor generation 
 #define PHANTOM	(1<<16)
 #define PARABOLIC	(1<<20)
 #define CROSSOVER	(1<<21)
@@ -864,6 +882,7 @@ typedef struct GLOBALS
 #define CROSS2	(DOT+(9<<20))
 #define ALL		(1<<24)
 #define TXT		(1<<25)
+#define MULTICOLOR (1<<30)
 
 #define PL_ALL		(1<<6)
 #define PL_LONG	(1<<7)
@@ -890,6 +909,7 @@ typedef struct GLOBALS
 #define SILVER		0xc0c0c0
 #define GREY		0x808080
 #define BLACK		0x010101
+#define WHITE		0xffffff
 #define TRANSP		0x80000000
 
 #define TO_WINDOW	1	// print channels
@@ -904,6 +924,7 @@ typedef struct GLOBALS
 #define TO_TITLE	16
 #define TO_INFO	17
 #define TO_PANEL	18
+#define TO_CHART	19
 #define TO_ANY		(TO_WINDOW|TRAINMODE)
 
 #define SV_TRADES		(1<<0)	// SaveMode
@@ -953,6 +974,7 @@ typedef struct GLOBALS
 #define GET_UNDERLYING	67	
 #define GET_SERVERSTATE	68
 #define GET_GREEKS		69
+#define GET_LOOPS			70
 
 #define SET_PATCH			128 // Work around broker API bugs
 #define SET_SLIPPAGE		129 // Max adverse slippage for orders

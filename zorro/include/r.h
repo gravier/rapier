@@ -205,6 +205,7 @@ int Rstart(const char* source,int debug)
 	PROC(RGetVector);
 	PROC(RPrint);
 	PROC(RLastOutput);
+	PROC(RDeinit);
 #endif
 	hR = RInit_(strf("%s  --no-save",g->sRTermPath), debug);
 	if(!hR) {

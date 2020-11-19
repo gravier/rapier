@@ -15,6 +15,11 @@
 #define SHORTING	SHORTED
 #define TR_BID		(1<<0)
 #define NumTrades		g->numTrades
+#define ExitTime	g->nExitTime
+#define TradeExitTime	g->tr->nExitTime
+#define Weekend	g->nWeekend
+#define assetSwitch	assetSelect
+
 
 
 // helper functions for limiting the open trades
