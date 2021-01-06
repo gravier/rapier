@@ -1,3 +1,8 @@
 *.swp
 staging/
+secrets/password.txt
+secrets/Accounts.csv
+secrets/password.txt
+secrets/config-demo.ini
+secrets/config-live.ini
 store/
