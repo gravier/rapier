@@ -5,4 +5,5 @@ secrets/Accounts.csv
 secrets/password.txt
 secrets/config-demo.ini
 secrets/config-live.ini
+secrets/ZorroFix.ini
 store/
