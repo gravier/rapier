@@ -1,20 +1,24 @@
 #!/bin/bash -eu
 
-if [ ! "$#" -eq 3 ]; then
-  echo "Usage: run_mt.sh [demo|live] [script] [command0]"
+if [ ! "$#" -eq 4 ]; then
+  echo "Usage: boot.sh [tws_major_version] [demo|live] [script] [command0]"
   exit 1
 fi
 
-MODE=$1
-SCRIPT=$2
-COMMAND0=$3
+TWS_V=$1
+MODE=$2
+SCRIPT=$3
+COMMAND0=$4
 
 #-----------------------------------------------------------------------
+TWS_MAJOR_VRSN=TWS_V
+IBC_INI=~/ibc/config-${MODE}.ini
+export JAVA_HOME=~/.i4j_jres/1.8.0_152-tzdata2019c_64
 
 export DISPLAY SCREEN_NUM SCREEN_WHD
 
 XVFB_PID=0
-MT4_PID=0
+TWS_PID=0
 CRON_PID=0
 
 term_handler() {
@@ -24,9 +28,9 @@ term_handler() {
     # NOTE: 'wait' returns status of the killed process
     # NOTE: (with set -e this breaks the script)
 
-    if ps -p $MT4_PID > /dev/null; then
-        kill -SIGTERM $MT4_PID
-        wait $MT4_PID || true
+    if ps -p $TWS_PID > /dev/null; then
+        kill -SIGTERM $TWS_PID
+        wait $TWS_PID || true
     fi
 
     # Wait end of all wine processes
@@ -77,13 +81,12 @@ mklink() {
 }
 
 echo "Mounting persistent storage directories..."
-mklink $STORE/mt4/logs      $MT4/logs
-mklink $STORE/mt4/MQL4/Logs $MT4/MQL4/Logs
+mklink $STORE/ibc/logs      $IBC/logs
 mklink $STORE/zorro/Cache   $ZORRO/Cache
 mklink $STORE/zorro/Data    $ZORRO/Data
 mklink $STORE/zorro/Log     $ZORRO/Log
 
-MQL_LOG_FILE="$MT4/MQL4/Logs/$(date +%Y%m%d.log)"
+#MQL_LOG_FILE="$MT4/MQL4/Logs/$(date +%Y%m%d.log)"
 
 logsha() {
   if [ -f "$MQL_LOG_FILE" ]; then
@@ -116,24 +119,25 @@ x11vnc -bg -nopw -rfbport 5900 -forever -xkb -o /tmp/x11vnc.log
 #sleep 2
 
 #-----------------------------------------------------------------------
-# MT4
+# IBC
 
-MQL_LOG_SHA="$(logsha)"
+#MQL_LOG_SHA="$(logsha)"
 
-echo "(BOOT) Starting MT4..." >&2
-wine ./mt4/terminal.exe /portable "startup-${MODE}.ini" &
-MT4_PID=$!
+echo "(BOOT) Starting IB..." >&2
+ls -l $HOME/ibc/
+$HOME/ibc/scripts/ibcstart.sh $TWS_V --ibc-path=$IBC --ibc-ini=$IBC_INI --java-path=$JAVA_HOME/bin &
+IB_PID=$!
 
 #-----------------------------------------------------------------------
 # Zorro
 
-while [ "$MQL_LOG_SHA" = "$(logsha)" ]; do
-  echo "(BOOT) Waiting for MT4 Zorro Expert to initialize..." >&2
-  sleep 1
-done
+#while [ "$MQL_LOG_SHA" = "$(logsha)" ]; do
+#  echo "(BOOT) Waiting for MT4 Zorro Expert to initialize..." >&2
+#  sleep 1
+#done
 
-sleep 2 # give it just a little more
-echo "(BOOT) Waiting for MT4 Zorro Expert to initialize... OK" >&2
+#sleep 2 # give it just a little more
+#echo "(BOOT) Waiting for MT4 Zorro Expert to initialize... OK" >&2
 
 winedevice() {
   sudo ps aux | grep winedevice.exe | head -n1 | awk '{ print $2 }'
@@ -153,7 +157,9 @@ echo "(BOOT) Found: $(sudo ps aux | grep $WINEDEVICE | grep -v grep)"
 echo "(BOOT) Starting cpulimit for winedevice.exe (pid=$WINEDEVICE)..." >&2
 sudo cpulimit -p $WINEDEVICE -l 1 &
 
+sleep 30
 echo "(BOOT) Starting Zorro..." >&2
+wine ./zorro/zorro.exe -c "$MODE" -trade "$SCRIPT" -i "$COMMAND0"
 wine ./zorro/zorro.exe -c "$MODE" -trade "$SCRIPT" -i "$COMMAND0"
 #wine zorro/zorro.exe
 
@@ -161,7 +167,7 @@ wine ./zorro/zorro.exe -c "$MODE" -trade "$SCRIPT" -i "$COMMAND0"
 # Cleanup
 
 # Wait end of mt4
-wait $MT4_PID
+wait $IB_PID
 
 # Wait end of all wine processes
 /docker/waitonprocess.sh wineserver

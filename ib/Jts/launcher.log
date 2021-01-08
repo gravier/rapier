@@ -1,0 +1,84 @@
+2020-11-19 20:56:32.498 [IT] INFO  [JTS-Main] - OvernightManager.dayInit: new values: dayOfTheWeek: 5 (Thu), YYYYMMofToday: 202011, YYYYMMDDofToday: 20201119, m_todayDate: 20201119, dueToChangeInTimezone: false
+2020-11-19 20:56:32.502 [IT] INFO  [JTS-Main] - Created on: 20201119
+2020-11-19 20:56:32.502 [IT] INFO  [JTS-Main] - ------------------------------- TWS RESTART --------------------------------
+2020-11-19 20:56:32.503 [IT] INFO  [JTS-Main] - installer version: 2.67, installer type: standalone, install dir: '/home/evaldas/Jts/981/', Jts dir: '/home/evaldas/Jts', VM options file: '/home/evaldas/Jts/981/tws.vmoptions'
+2020-11-19 20:56:32.507 [IT] INFO  [JTS-Main] - PROXY Installed custom selector
+2020-11-19 20:56:32.519 [IT] INFO  [JTS-Main] - LOCALE: Property locale_to_use=null
+2020-11-19 20:56:32.522 [IT] INFO  [JTS-Main] - LOCALE: JTS Locale=en_US  country=United States  variant=
+2020-11-19 20:56:32.524 [IT] INFO  [JTS-Main] - Region: America
+2020-11-19 20:56:32.528 [IT] INFO  [JTS-Main] - DocumentBuilderFactory=jar:file:/home/evaldas/.i4j_jres/1.8.0_152-tzdata2019c_64/lib/rt.jar!/com/sun/org/apache/xerces/internal/jaxp/DocumentBuilderFactoryImpl.class
+2020-11-19 20:56:32.555 [IT] INFO  [JTS-Main] - LOCALE: loaded 9 supported locales
+2020-11-19 20:56:32.568 [IT] INFO  [JTS-Main] - LOCALE: loaded 8 countries
+2020-11-19 20:56:32.574 [IT] INFO  [JTS-Main] - LOCALE: from OS: en_US
+2020-11-19 20:56:32.574 [IT] INFO  [JTS-Main] - LOCALE: created classloader java.net.URLClassLoader@7f3b84b8 with file:/home/evaldas/Jts/981/jars/locales.jar, parent: sun.misc.Launcher$AppClassLoader@7852e922
+2020-11-19 20:56:32.575 [IT] INFO  [JTS-Main] - Locale=en_US  country=United States  variant=
+2020-11-19 20:56:32.577 [IT] INFO  [JTS-Main] - prohibiting class lookup [twslaunch.ji18n.LauncherLanguage]
+2020-11-19 20:56:32.579 [IT] INFO  [JTS-Main] - prohibiting class lookup [twslaunch.ji18n.LauncherLanguage_en]
+2020-11-19 20:56:32.579 [IT] INFO  [JTS-Main] - prohibiting class lookup [twslaunch.ji18n.LauncherLanguage_en_US]
+2020-11-19 20:56:32.580 [IT] INFO  [JTS-Main] - LOCALE:  type: launcher intended: en_US actual:  size: 422
+2020-11-19 20:56:32.591 [IT] INFO  [JTS-Main] - settings dir: '/home/evaldas/Jts'
+2020-11-19 20:56:32.610 [IT] INFO  [JTS-Main] - prohibiting class lookup [org.jfree.chart.LocalizationBundle]
+2020-11-19 20:56:32.611 [IT] INFO  [JTS-Main] - prohibiting class lookup [org.jfree.chart.LocalizationBundle_en]
+2020-11-19 20:56:32.611 [IT] INFO  [JTS-Main] - prohibiting resource lookup [org/jfree/chart/LocalizationBundle_en.properties]
+2020-11-19 20:56:32.611 [IT] INFO  [JTS-Main] - prohibiting class lookup [org.jfree.chart.LocalizationBundle_en_US]
+2020-11-19 20:56:32.611 [IT] INFO  [JTS-Main] - prohibiting resource lookup [org/jfree/chart/LocalizationBundle_en_US.properties]
+2020-11-19 20:56:32.611 [IT] INFO  [JTS-Main] - prohibiting class lookup [org.jfree.chart.plot.LocalizationBundle]
+2020-11-19 20:56:32.612 [IT] INFO  [JTS-Main] - prohibiting class lookup [org.jfree.chart.plot.LocalizationBundle_en]
+2020-11-19 20:56:32.612 [IT] INFO  [JTS-Main] - prohibiting resource lookup [org/jfree/chart/plot/LocalizationBundle_en.properties]
+2020-11-19 20:56:32.612 [IT] INFO  [JTS-Main] - prohibiting class lookup [org.jfree.chart.plot.LocalizationBundle_en_US]
+2020-11-19 20:56:32.612 [IT] INFO  [JTS-Main] - prohibiting resource lookup [org/jfree/chart/plot/LocalizationBundle_en_US.properties]
+2020-11-19 20:56:33.040 [IT] INFO  [JTS-Main] - jfreechart version =1.0.8
+2020-11-19 20:56:33.040 [IT] INFO  [JTS-Main] - jcommon version =1.0.12
+2020-11-19 20:56:33.071 [IT] INFO  [JTS-Main] - JDOMFactory Class =interface org.jdom.JDOMFactory
+2020-11-19 20:56:33.098 [IT] INFO  [JTS-Main] - hsqldb jdbc =class org.hsqldb.jdbcDriver 2.4
+2020-11-19 20:56:33.278 [IT] INFO  [JTS-Main] - LauncherFontUpdater: simulatehighdefscreen=false
+2020-11-19 20:56:33.278 [IT] INFO  [JTS-Main] - LauncherFontUpdater: Screen dimensions=2560x1440
+2020-11-19 20:56:33.278 [IT] INFO  [JTS-Main] - LauncherFontUpdater: highres=false
+2020-11-19 20:56:33.279 [IT] INFO  [JTS-Main] - LauncherFontUpdater: FontSize=16
+2020-11-19 20:56:33.279 [IT] INFO  [JTS-Main] - initPreUI() - entry
+2020-11-19 20:56:33.286 [IT] INFO  [JTS-Main] - Build 981.2d, Nov 18, 2020 12:40:07 PM
+2020-11-19 20:56:33.315 [IT] INFO  [JTS-Main] - LookAndFeelChangedListener installed
+2020-11-19 20:56:33.319 [IT] INFO  [JTS-Main] - JtsLookAndFeel initialized
+2020-11-19 20:56:33.620 [IT] INFO  [JTS-Main] - Current LAF: TWS LAF
+2020-11-19 20:56:33.621 [IT] INFO  [JTS-Main] - initPreUI() - exit
+2020-11-19 20:56:33.629 [IT] INFO  [JTS-MiscUlrsRequester-3] - Connecting ndc1.ibllc.com:4000 timeout=0...
+2020-11-19 20:56:33.768 [IT] INFO  [JTS-MiscUlrsRequester-3] - Connected to ndc1.ibllc.com:4000 on local port 0 socket local addrs:port /192.168.0.125:43200
+2020-11-19 20:56:33.770 [IT] INFO  [JTS-MiscUlrsRequester-3] - Resolving mac address
+2020-11-19 20:56:33.771 [IT] INFO  [JTS-MiscUlrsRequester-3] - MACNetworkInfo created <f67a16a5|A0:A4:C5:D7:5C:E9|192.168.0.125>
+2020-11-19 20:56:33.774 [IT] INFO  [JTS-MISC URLsListenerS1-4] - Starting listener thread [sessionID=1]...
+2020-11-19 20:56:33.794 [IT] INFO  [JTS-MiscUlrsRequester-3] - Sending MiscUrls request
+2020-11-19 20:56:33.794 [IT] INFO  [JTS-AuthDispatcherS1-5] - Starting dispatcher thread [sessionID=1]...
+2020-11-19 20:56:33.796 [IT] INFO  [JTS-MiscUlrsRequester-3] - LOGIN_TIME_MONITOR	 false 20:56:33:796 since start = 0 thread delay = 0 global delay = 0 tag=null, cls=AuthDispatcher method=send
+2020-11-19 20:56:33.797 [IT] INFO  [JTS-AuthResponseMonitor-6] - Starting auth response monitor thread
+2020-11-19 20:56:33.798 [IT] INFO  [JTS-MISC URLsListenerS1-4] - Initial listener buffer size is 65536.
+2020-11-19 20:56:33.924 [IT] INFO  [JTS-AuthDispatcherS1-5] - Received NS_MISC_URLS
+2020-11-19 20:56:33.927 [IT] INFO  [JTS-AuthDispatcherS1-5] - Misc URL: scope is blank - setting userScope to EXTERNAL
+2020-11-19 20:56:33.927 [IT] INFO  [JTS-AuthDispatcherS1-5] - Misc URL: setting userScope to EXTERNAL
+2020-11-19 20:56:33.932 [IT] INFO  [JTS-AuthDispatcherS1-5] - Disconnecting ndc1.ibllc.com:4000 [disconnectDetails=DisconnectDetails[sessionID=1,endPoint=ndc1.ibllc.com:4000,reason=DISCONNECT_BY_DESIGN,cause=null,systemMessage=null,keepSocketOpen=false]]...
+2020-11-19 20:56:33.932 [IT] INFO  [JTS-AuthDispatcherS1-5] - Socket closed.
+2020-11-19 20:56:33.933 [IT] INFO  [JTS-AuthDispatcherS1-5] - Interrupting dispatcher [sessionID=1]...
+2020-11-19 20:56:33.933 [IT] INFO  [JTS-AuthDispatcherS1-5] - Interrupting listener [sessionID=1,disconnectSocket=true]...
+2020-11-19 20:56:33.933 [IT] INFO  [JTS-MISC URLsListenerS1-4] - Socket or stream for connection ndc1.ibllc.com:4000 was closed by another thread.
+2020-11-19 20:56:33.933 [IT] INFO  [JTS-AuthDispatcherS1-5] - Dispatcher thread terminating [sessionID=1,interrupted=true]...
+2020-11-19 20:56:33.933 [IT] INFO  [JTS-MISC URLsListenerS1-4] - Listener thread terminating [sessionID=1] [seen=1167,totalShifted=1167,moreAvailable=0]
+2020-11-19 20:56:33.934 [IT] INFO  [JTS-AuthResponseMonitor-6] - Terminating auth response monitor thread
+2020-11-19 20:56:34.256 [IT] INFO  [AWT-EventQueue-0] - Install4jAutoUpdateService initialized [props=LauncherProperties[updateDownloadUrl=null,skipUpdateCheck=false,nightlyEnabled=true,channelNameArg=null,channelName=latest,channelChanged=false,jtsConfigDir=/home/evaldas/Jts,apiPort=null,sessionId=null,installDir=/home/evaldas/Jts/981/,exeName=null]].
+2020-11-19 20:56:34.500 [IT] INFO  [AWT-EventQueue-0] - Default timezone:Europe/Kiev
+2020-11-19 20:56:34.502 [IT] INFO  [AWT-EventQueue-0] - Starting GstatMessageMgr...
+2020-11-19 20:56:34.506 [IT] INFO  [JTS-GstatMessageMgr-9] - Sending a request to GSTAT [url=https://api.ibkr.com/v1/gstat//bulletins,data='{"p":"981.2d","t":"Maintenance","tz":"Europe/Kiev","format":"webapp","theme":"dark","fontSize":"12px","lang":"en"}']...
+2020-11-19 20:56:34.532 [IT] INFO  [AWT-EventQueue-0] - Started on 20201119-18:56:34
+2020-11-19 20:56:34.532 [IT] INFO  [AWT-EventQueue-0] - Default timezone:Europe/Kiev name:Eastern European Time dst:3600000
+2020-11-19 20:56:34.532 [IT] INFO  [AWT-EventQueue-0] - java version = 1.8.0_152
+2020-11-19 20:56:34.533 [IT] INFO  [AWT-EventQueue-0] - sun.arch.data.model = 64
+2020-11-19 20:56:34.533 [IT] INFO  [AWT-EventQueue-0] - os = Linux
+2020-11-19 20:56:34.533 [IT] INFO  [AWT-EventQueue-0] - os version = 5.4.0-52-generic
+2020-11-19 20:56:34.533 [IT] INFO  [AWT-EventQueue-0] - os architecture = 32
+2020-11-19 20:56:34.533 [IT] INFO  [AWT-EventQueue-0] - runtime = Java(TM) SE Runtime Environment
+2020-11-19 20:56:34.533 [IT] INFO  [AWT-EventQueue-0] - vendor = Oracle Corporation
+2020-11-19 20:56:34.533 [IT] INFO  [AWT-EventQueue-0] - vm name = Java HotSpot(TM) 64-Bit Server VM
+2020-11-19 20:56:34.533 [IT] INFO  [AWT-EventQueue-0] - username = 'evaldas'
+2020-11-19 20:56:34.845 [IT] INFO  [AWT-EventQueue-0] - Basic init done. Login window shown
+2020-11-19 20:56:35.850 [IT] INFO  [JTS-GstatMessageMgr-9] - Received response [errorCode=204,contentLen=-1].
+2020-11-19 20:56:36.274 [IT] INFO  [JavaFX Application Thread] - GstatMessagePanel: setup web app is done
+2020-11-19 20:56:37.794 [IT] INFO  [AWT-EventQueue-0] - Stopping GstatMessageMgr...
+2020-11-19 20:56:37.803 [IT] INFO  [AWT-EventQueue-0] - Application exit

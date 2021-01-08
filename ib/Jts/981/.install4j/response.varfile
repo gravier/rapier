@@ -1,0 +1,9 @@
+# install4j response file for Trader Workstation 981 (.2d) 20201118 12:40:07
+cmdLineArgs$StringArray="/home/evaldas/Jts","ndc1.ibllc.com\:4000"
+exeName=tws
+executeLauncherAction$Boolean=false
+installerType=standalone
+jtsConfigDir=/home/evaldas/Jts
+sys.adminRights$Boolean=false
+sys.installationDir=/home/evaldas/Jts/981
+sys.languageId=en

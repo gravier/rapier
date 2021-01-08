@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=Trader Workstation 981
+Exec="/home/evaldas/Jts/981/tws" %U
+Icon=/home/evaldas/Jts/981/.install4j/tws.png
+Categories=Application;
+StartupWMClass=install4j-jclient-LoginFrame

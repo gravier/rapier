@@ -1,0 +1,400 @@
+[INFO] logger started at Thu Nov 19 20:55:05 EET 2020
+[INFO] executable name: /home/evaldas/code/edu/robotwealth/infrastructure/sample/rapier/ib/tws-latest-standalone-linux-x64.sh
+[INFO] install4j version: 8.0.1 (build 8038)
+[INFO] Properties: 
+-- listing properties --
+java.runtime.name=Java(TM) SE Runtime Environment
+exe4j.moduleName=/home/evaldas/code/edu/robotwealth/in...
+sun.boot.library.path=/home/evaldas/.i4j_jres/1.8.0_152-tzd...
+java.vm.version=25.152-b16
+java.vm.vendor=Oracle Corporation
+java.vendor.url=http://java.oracle.com/
+path.separator=:
+java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+file.encoding.pkg=sun.io
+user.country=US
+sun.java.launcher=SUN_STANDARD
+sun.os.patch.level=unknown
+install4j.exeDir=/home/evaldas/code/edu/robotwealth/in...
+java.vm.specification.name=Java Virtual Machine Specification
+user.dir=/home/evaldas/code/edu/robotwealth/in...
+java.runtime.version=1.8.0_152-b16
+java.awt.graphicsenv=sun.awt.X11GraphicsEnvironment
+java.endorsed.dirs=/home/evaldas/.i4j_jres/1.8.0_152-tzd...
+os.arch=amd64
+java.io.tmpdir=/tmp
+line.separator=
+
+java.vm.specification.vendor=Oracle Corporation
+os.name=Linux
+exe4j.totalDataLength=152276487
+sun.java2d.noddraw=true
+sun.jnu.encoding=UTF-8
+java.library.path=/home/evaldas/code/edu/robotwealth/in...
+sun.awt.enableExtraMouseButtons=true
+install4j.launcherId=4533
+java.specification.name=Java Platform API Specification
+java.class.version=52.0
+sun.management.compiler=HotSpot 64-Bit Tiered Compilers
+os.version=5.4.0-52-generic
+install4j.swt=false
+user.home=/home/evaldas
+install4j.cwd=/home/evaldas/code/edu/robotwealth/in...
+user.timezone=Europe/Kiev
+java.awt.printerjob=sun.print.PSPrinterJob
+java.specification.version=1.8
+file.encoding=UTF-8
+install4j.jvmDir=/home/evaldas/.i4j_jres/1.8.0_152-tzd...
+user.name=evaldas
+java.class.path=i4jruntime.jar:launcher0.jar
+java.vm.specification.version=1.8
+sun.arch.data.model=64
+java.home=/home/evaldas/.i4j_jres/1.8.0_152-tzd...
+sun.java.command=install4j.Installer1760162577
+java.specification.vendor=Oracle Corporation
+user.language=en
+awt.toolkit=sun.awt.X11.XToolkit
+java.vm.info=mixed mode
+java.version=1.8.0_152
+java.ext.dirs=/home/evaldas/.i4j_jres/1.8.0_152-tzd...
+sun.boot.class.path=/home/evaldas/.i4j_jres/1.8.0_152-tzd...
+java.vendor=Oracle Corporation
+install4j.appDir=/home/evaldas/code/edu/robotwealth/in...
+file.separator=/
+java.vendor.url.bug=http://bugreport.sun.com/bugreport/
+sun.cpu.endian=little
+sun.io.unicode.encoding=UnicodeLittle
+sun.font.fontmanager=sun.awt.X11FontManager
+sun.desktop=gnome
+sun.cpu.isalist=
+[INFO] Variable changed: sys.resolveUserSpecificInstallationDir=true[class java.lang.String]
+[INFO] System language 'en'
+[INFO] com.install4j.runtime.beans.actions.control.SetVariableAction [ID 3121]: Execute action
+       Property script: com.install4j.script.I4jScript_Internal_1
+       Property variableName: installerType
+       Property failIfNull: true
+       Property onlyIfUndefined: false
+       Property responseFileVariable: true
+       Property rollbackSupported: false
+       Variable changed: installerType=standalone[class java.lang.String]
+       Execute action successful after 2 ms
+[INFO] com.install4j.runtime.beans.actions.control.RunScriptAction [ID 1597]: Execute action
+       Property rollbackScript: null
+       Property script: com.install4j.script.I4jScript_Internal_2
+       Property rollbackSupported: false
+       Variable changed: sys.installationDir=/home/evaldas/Jts/981[class java.lang.String]
+       Execute action successful after 3 ms
+[INFO] com.install4j.runtime.beans.actions.control.SetVariableAction [ID 1892]: Execute action
+       Property script: com.install4j.script.I4jScript_Internal_4
+       Property variableName: exeName
+       Property failIfNull: true
+       Property onlyIfUndefined: false
+       Property responseFileVariable: true
+       Property rollbackSupported: false
+       Variable changed: exeName=tws[class java.lang.String]
+       Execute action successful after 0 ms
+[INFO] com.install4j.runtime.beans.screens.StartupScreen [ID 1]: command: move 1 screens, executing actions, checking condition
+[INFO] com.install4j.runtime.beans.screens.FormScreen [ID 2738]: Show screen
+[INFO] com.install4j.runtime.beans.screens.FormScreen [ID 2738]: command: move 1 screens, executing actions, checking condition
+[INFO] com.install4j.runtime.beans.screens.InstallationDirectoryScreen [ID 4122]: Show screen
+       checking writable with maximum
+[INFO] com.install4j.runtime.beans.screens.InstallationDirectoryScreen [ID 4122]: command: move 1 screens, executing actions, checking condition
+[INFO] com.install4j.runtime.beans.screens.InstallationScreen [ID 8]: Show screen
+[INFO] com.install4j.runtime.beans.actions.control.SetVariableAction [ID 4116]: Execute action
+       Property script: com.install4j.script.I4jScript_Internal_6
+       Property variableName: jtsConfigDir
+       Property failIfNull: true
+       Property onlyIfUndefined: false
+       Property responseFileVariable: true
+       Property rollbackSupported: false
+       Variable changed: jtsConfigDir=/home/evaldas/Jts[class java.lang.String]
+       Execute action successful after 1 ms
+[INFO] com.install4j.runtime.beans.actions.control.SetVariableAction [ID 4117]: Execute action
+       Property script: com.install4j.script.I4jScript_Internal_7
+       Property variableName: cmdLineArgs
+       Property failIfNull: true
+       Property onlyIfUndefined: false
+       Property responseFileVariable: true
+       Property rollbackSupported: false
+       Variable changed: cmdLineArgs=[/home/evaldas/Jts, ndc1.ibllc.com:4000][class [Ljava.lang.String;]
+       Execute action successful after 1 ms
+[INFO] com.install4j.runtime.beans.actions.control.SetVariableAction [ID 4118]: Execute action
+       Property script: com.install4j.script.I4jScript_Internal_8
+       Property variableName: iconArgs
+       Property failIfNull: false
+       Property onlyIfUndefined: false
+       Property responseFileVariable: false
+       Property rollbackSupported: false
+       Variable changed: iconArgs=-J-DjtsConfigDir="/home/evaldas/Jts"[class java.lang.String]
+       Execute action successful after 0 ms
+[INFO] com.install4j.runtime.beans.actions.control.SetVariableAction [ID 4119]: Execute action
+       Property script: com.install4j.script.I4jScript_Internal_11
+       Property variableName: vmOptionsPath
+       Property failIfNull: true
+       Property onlyIfUndefined: false
+       Property responseFileVariable: false
+       Property rollbackSupported: false
+       Variable changed: vmOptionsPath=/home/evaldas/Jts/981/tws.vmoptions[class java.lang.String]
+       Execute action successful after 0 ms
+[INFO] com.install4j.runtime.beans.actions.control.SetVariableAction [ID 4120]: Execute action
+       Property script: com.install4j.script.I4jScript_Internal_12
+       Property variableName: savedVmOptions
+       Property failIfNull: true
+       Property onlyIfUndefined: false
+       Property responseFileVariable: false
+       Property rollbackSupported: false
+       VM options file not found: /home/evaldas/Jts/981/tws.vmoptions
+       Variable changed: savedVmOptions={content=}[class java.util.HashMap]
+       Execute action successful after 5 ms
+[INFO] com.install4j.runtime.beans.actions.control.SetVariableAction [ID 4121]: Execute action
+       Property script: com.install4j.script.I4jScript_Internal_13
+       Property variableName: mergedVmOptions
+       Property failIfNull: true
+       Property onlyIfUndefined: false
+       Property responseFileVariable: false
+       Property rollbackSupported: false
+       Variable changed: mergedVmOptions=#
+# This file contains VM parameters for Trader Workstation 981.
+# Each parameter should be defined in a separate line and the
+# last line must be followed by a line feed. No leading or
+# trailing whitespaces are allowed in the same line, where a
+# parameter is defined.
+#
+# Lines starting with a '#' character are treated as comments
+# and ignored. Additionally, if a line contains a
+# '### keep on update' string, all parameters defined below will
+# be preserved on update.
+#
+
+# maximum Java heap size
+-Xmx768m
+
+# GC settings
+-XX:+UseG1GC
+-XX:MaxGCPauseMillis=200
+-XX:ParallelGCThreads=20
+-XX:ConcGCThreads=5
+-XX:InitiatingHeapOccupancyPercent=70
+
+-Dinstaller.uuid=7b3acc68-caa2-42e8-a3fc-e91bce0d2170
+-DvmOptionsPath=/home/evaldas/Jts/981/tws.vmoptions
+-Dsun.awt.nopixfmt=true
+-Dsun.java2d.noddraw=true
+-Dswing.boldMetal=false
+-Dsun.locale.formatasdefault=true
+
+### keep on update
+[class java.lang.String]
+       Execute action successful after 1 ms
+[INFO] com.install4j.runtime.beans.actions.control.RunScriptAction [ID 3414]: Execute action
+       Property rollbackScript: null
+       Property script: com.install4j.script.I4jScript_Internal_36
+       Property rollbackSupported: false
+       Execute action successful after 0 ms
+[INFO] com.install4j.runtime.beans.actions.InstallFilesAction [ID 9]: Execute action
+       Property directoryResolverScript: null
+       Property fileFilterScript: null
+       Property sizeCalculatorScript: null
+       Property acceptAllCertificates: false
+       Property checkFreeSpace: true
+       Property delay: false
+       Property installRuntime: true
+       Property rollbackSupported: true
+       Property saveDownloadedFiles: false
+       Property showFileNames: true
+       Property triggerReboot: true
+       Property updateBundledJre: true
+       Property validateApplicationId: false
+       checking writable with maximum
+       Install file: /home/evaldas/Jts/981/.install4j/restarter; size: 12917 bytes; exists: false
+       File options set to: [fileTime: Thu Nov 19 06:30:34 EET 2020, mode: 755, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/.install4j/s_1fmt56t.png; size: 169149 bytes; exists: false
+       File options set to: [fileTime: Tue Apr 28 19:22:42 EEST 2020, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/.install4j/tws.png; size: 2566 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/uninstall.png; size: 6648 bytes; exists: false
+       File options set to: [fileTime: Wed Jul 24 21:06:54 EEST 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/jars/jts4launch-981.jar; size: 42442035 bytes; exists: false
+       File options set to: [fileTime: Wed Nov 18 20:54:42 EET 2020, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/jars/jxbrowser-7.10.jar; size: 5051051 bytes; exists: false
+       File options set to: [fileTime: Wed Sep 02 23:33:30 EEST 2020, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/jars/jxbrowser-linux64-7.10.jar; size: 71981114 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/jars/jxbrowser-swing-7.10.jar; size: 58714 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/jars/locales.jar; size: 114646 bytes; exists: false
+       File options set to: [fileTime: Thu Nov 07 17:30:14 EET 2019, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/jars/log4j-api-2.12.0.jar; size: 189229 bytes; exists: false
+       File options set to: [fileTime: Fri Jan 24 18:00:12 EET 2020, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/jars/log4j-core-2.12.0.jar; size: 847072 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/jars/total-2020.jar; size: 7869644 bytes; exists: false
+       File options set to: [fileTime: Wed Apr 01 19:12:32 EEST 2020, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/jars/twslaunch-981.jar; size: 4060694 bytes; exists: false
+       File options set to: [fileTime: Thu Nov 19 06:22:08 EET 2020, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/jars/twslaunch-install4j-1.10.jar; size: 13167 bytes; exists: false
+       File options set to: [fileTime: Fri Jun 19 02:21:14 EEST 2020, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/tws; size: 14801 bytes; exists: false
+       File options set to: [fileTime: Thu Nov 19 06:30:34 EET 2020, mode: 755, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/uninstall; size: 13128 bytes; exists: false
+       File options set to: [fileTime: Thu Nov 19 06:30:34 EET 2020, mode: 700, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/.install4j/inst_jre.cfg; size: 49 bytes; exists: false
+       File options set to: [fileTime: Thu Nov 19 20:55:45 EET 2020, mode: 644, overwriteMode: Always, shared: false, uninstallMode: If created, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/.install4j/i4jruntime.jar; size: 1896071 bytes; exists: false
+       File options set to: [fileTime: Thu Nov 19 20:55:45 EET 2020, mode: 644, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       Install file: /home/evaldas/Jts/981/.install4j/MessagesDefault; size: 34270 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4jparams.conf; size: 128970 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/stats.properties; size: 337 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4jempty.ttf; size: 1004 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/user.jar; size: 46290 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/launcher5cbd629.jar; size: 952 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/launcher0.jar; size: 719 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/launcher2bfa42ba.jar; size: 757 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/launcher3257f6f9.jar; size: 764 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_33_t3ye4x.utf8; size: 37406 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_28_t3ye4x.utf8; size: 32406 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_32_t3ye4x.properties; size: 1075 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_12_t3ye4x.utf8; size: 32438 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_10_t3ye4x.utf8; size: 33852 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_3_t3ye4x.properties; size: 1034 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_27_t3ye4x.properties; size: 926 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_26_t3ye4x.utf8; size: 34684 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_19_t3ye4x.utf8; size: 48901 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_31_t3ye4x.utf8; size: 35441 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_40_t3ye4x_kw6g0r.ico; size: 146982 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_37_t3ye4x.properties; size: 930 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_22_t3ye4x.properties; size: 935 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_30_t3ye4x.utf8; size: 37640 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_15_t3ye4x.utf8; size: 38916 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_42_t3ye4x_18gg8kx.png; size: 9202 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_14_t3ye4x.utf8; size: 32787 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_38_t3ye4x.utf8; size: 31905 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_23_t3ye4x.utf8; size: 44250 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_35_t3ye4x.properties; size: 3187 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_29_t3ye4x.utf8; size: 34747 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_8_t3ye4x.properties; size: 1202 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_11_t3ye4x.properties; size: 791 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_21_t3ye4x.utf8; size: 34848 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_25_t3ye4x.utf8; size: 38559 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/libi4jinst.dylib; size: 129760 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_18_t3ye4x.properties; size: 1021 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_5_t3ye4x.properties; size: 1034 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_16_t3ye4x.properties; size: 987 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_41_t3ye4x_a7hqzf.png; size: 1030 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_24_t3ye4x.properties; size: 2138 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_6_t3ye4x.utf8; size: 34260 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_17_t3ye4x.utf8; size: 36743 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_36_t3ye4x.utf8; size: 36290 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/libi4jinst2.dylib; size: 67032 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_42_t3ye4x_18gg8kx@2x.png; size: 15419 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_9_t3ye4x.utf8; size: 32114 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_2_t3ye4x.utf8; size: 28346 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_39_t3ye4x.utf8; size: 37535 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_1_t3ye4x.properties; size: 1337 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_20_t3ye4x.utf8; size: 36810 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_34_t3ye4x.utf8; size: 53098 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_4_t3ye4x.utf8; size: 27656 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_13_t3ye4x.properties; size: 872 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_0_t3ye4x.utf8; size: 34270 bytes; exists: false
+       Install file: /home/evaldas/Jts/981/.install4j/i4j_extf_7_t3ye4x.utf8; size: 33730 bytes; exists: false
+       Execute action successful after 32195 ms
+[INFO] com.install4j.runtime.beans.actions.control.RunScriptAction [ID 2076]: Execute action
+       Property rollbackScript: null
+       Property script: com.install4j.script.I4jScript_Internal_39
+       Property rollbackSupported: false
+       Creating '/home/evaldas/Jts' directory...
+       Execute action successful after 2 ms
+[INFO] com.install4j.runtime.beans.actions.text.WriteTextFileAction [ID 2307]: Execute action
+       Property encoding: 
+       Property file: /home/evaldas/Jts/981/tws.vmoptions
+       Property text: #
+# This file contains VM parameters for Trader Workstation 981.
+# Each parameter should be defined in a separate line and the
+# last line must be followed by a line feed. No leading or
+# trailing whitespaces are allowed in the same line, where a
+# parameter is defined.
+#
+# Lines starting with a '#' character are treated as comments
+# and ignored. Additionally, if a line contains a
+# '### keep on update' string, all parameters defined below will
+# be preserved on update.
+#
+
+# maximum Java heap size
+-Xmx768m
+
+# GC settings
+-XX:+UseG1GC
+-XX:MaxGCPauseMillis=200
+-XX:ParallelGCThreads=20
+-XX:ConcGCThreads=5
+-XX:InitiatingHeapOccupancyPercent=70
+
+-Dinstaller.uuid=7b3acc68-caa2-42e8-a3fc-e91bce0d2170
+-DvmOptionsPath=/home/evaldas/Jts/981/tws.vmoptions
+-Dsun.awt.nopixfmt=true
+-Dsun.java2d.noddraw=true
+-Dswing.boldMetal=false
+-Dsun.locale.formatasdefault=true
+
+### keep on update
+
+       Property append: false
+       Property escaped: false
+       Property logText: true
+       Property rollbackSupported: true
+       Execute action successful after 1 ms
+[INFO] com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction [ID 10]: Execute action
+       Property categories: Application
+       Property linkDirectory: /usr/local/bin
+       Property programGroupEntryConfigs: []
+       Property programGroupName: Trader Workstation 981
+       Property uninstallerMenuName: Trader Workstation 981 Uninstaller
+       Property addDefaultLauncherLinks: true
+       Property addUninstaller: true
+       Property allUsers: true
+       Property failForSymlinksNotCreated: false
+       Property rollbackSupported: true
+       Property unixMenuEntries: true
+       Property unixSymlinks: true
+       Variable changed: sys.programGroupName=Trader Workstation 981[class java.lang.String]
+       Variable changed: sys.symlinkDir=/usr/local/bin[class java.lang.String]
+       Install file: /home/evaldas/Jts/981/.install4j/install4j_1xs9xvk-tws.desktop; size: 235 bytes; exists: false
+       File options set to: [fileTime: Thu Nov 19 20:55:45 EET 2020, mode: 755, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+[ERROR] com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction [ID 10]: /usr/local/bin/tws
+[INFO] com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction [ID 10]: Execute action successful after 512 ms
+[INFO] com.install4j.runtime.beans.actions.desktop.RegisterAddRemoveAction [ID 11]: Execute action
+       Property icon: i4j_extf_40_t3ye4x_kw6g0r.ico
+       Property iconSource: Custom icon
+       Property itemName: Trader Workstation 981
+       Property persistentProperties: {}
+       Property rollbackSupported: true
+       Execute action successful after 0 ms
+[INFO] com.install4j.runtime.beans.actions.desktop.CreateDesktopLinkAction [ID 54]: Execute action
+       Property additionalDesktopFileEntries: 
+       Property arguments: -J-DjtsConfigDir="/home/evaldas/Jts"
+       Property description: Trader Workstation 981
+       Property file: tws
+       Property name: Trader Workstation 981
+       Property startIn: null
+       Property unixIconFile: null
+       Property winIconFile: null
+       Property allUsers: true
+       Property macSingleBundleTarget: false
+       Property rollbackSupported: true
+       Property runAsAdministrator: false
+       Install file: /home/evaldas/Desktop/Trader Workstation 981.desktop; size: 279 bytes; exists: false
+       File options set to: [fileTime: Thu Nov 19 20:55:46 EET 2020, mode: 755, overwriteMode: Always, shared: false, uninstallMode: Always, delayIfNecessary: false]
+       Execute action successful after 2 ms
+[INFO] com.install4j.runtime.beans.actions.text.WriteTextFileAction [ID 2244]: Execute action
+       Property encoding: 
+       Property file: /home/evaldas/Jts/981/.install4j/.installSuccess
+       Property text: .
+       Property append: false
+       Property escaped: true
+       Property logText: true
+       Property rollbackSupported: true
+       Execute action successful after 1 ms
+[INFO] com.install4j.runtime.beans.screens.InstallationScreen [ID 8]: Rollback barrier reached
+       command: move 1 screens, executing actions, checking condition
+[INFO] com.install4j.runtime.beans.screens.FormScreen [ID 2790]: Show screen
+       Variable changed: executeLauncherAction=false[class java.lang.Boolean]
+[INFO] com.install4j.runtime.beans.screens.FormScreen [ID 2790]: command: finish
+       cleaning up
+       Finished

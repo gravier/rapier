@@ -647,3 +647,15 @@ F(knapsack);
 F(plotText);
 F(OBV);
 F(invalid);
+
+F(plotChart);
+F(enterTrade);
+F(ignore);
+F(SMAP);
+F2(EMA);
+F3(EMA);
+F(correl);
+F(CTI);
+F(CCYI);
+F(CCYIR);
+F(CCYIState);

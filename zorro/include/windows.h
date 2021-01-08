@@ -8019,7 +8019,7 @@ long WINAPI GetCurrentProcessId(void);
 VOID WINAPI ExitProcess(long uExitCode);
 long WINAPI TerminateProcess(long hProcess,long uExitCode);
 long WINAPI GetExitCodeProcess(long hProcess,long lpExitCode);
-VOID WINAPI FatalExit(long ExitCode);
+VOID WINAPI FatalExit(long uExitCode);
 long WINAPI GetEnvironmentStrings(long);
 long WINAPI FreeEnvironmentStrings(long);
 VOID WINAPI RaiseException(long dwExceptionCode,long dwExceptionFlags,long nNumberOfArguments,long lpArguments);

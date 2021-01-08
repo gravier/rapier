@@ -26,7 +26,8 @@ RUN set -ex; \
         wget \
         x11vnc \
         xvfb \
-        xz-utils
+        xz-utils \
+	xterm
 
 #-----------------------------------------------------------------------
 
@@ -89,24 +90,29 @@ ADD authorized_keys $HOME/.ssh/authorized_keys
 RUN chown -R $USER:$USER $HOME/.ssh
 
 #-----------------------------------------------------------------------
-# mt4 + zorro
+# IB + IBC + zorro
 
 ENV STORE=$HOME/store
 
-ENV MT4=$WINEPREFIX/drive_c/mt4
-ADD staging/mt4.tar.bz2 $MT4
-ADD secrets/startup-demo.ini $MT4/
-ADD secrets/startup-live.ini $MT4/
+RUN mkdir $HOME/ibc
+ENV IBC=$HOME/ibc
+ADD staging/ibc.tar.bz2 $IBC
+ADD secrets/config-demo.ini $IBC/
+ADD secrets/config-live.ini $IBC/
+ADD staging/ib.tar.bz2 $HOME
+
 
 ENV ZORRO=$WINEPREFIX/drive_c/zorro
 ADD staging/zorro.tar.bz2 $ZORRO
 ADD secrets/ZorroFix.ini $ZORRO/
 ADD secrets/Accounts.csv $ZORRO/History
+ADD secrets/password.txt $ZORRO/
+ADD secrets/key8e.dta $ZORRO/
 ADD strategy $ZORRO/Strategy
 
 RUN set -e; \
     chown -R $USER:$USER $ZORRO; \
-    chown -R $USER:$USER $MT4
+    chown -R $USER:$USER $IBC
 
 #-----------------------------------------------------------------------
 # nginx
@@ -115,13 +121,19 @@ USER $USER
 
 RUN mkdir -p $HOME/public; \
     ln -s $ZORRO/Log $HOME/public/zorro; \
-    ln -s $MT4/logs $HOME/public/mt4; \
-    ln -s $MT4/MQL4/Logs $HOME/public/mt4_mql4; \
+    ln -s $IBC/logs $HOME/public/ibc; \
+    #ln -s $MT4/MQL4/Logs $HOME/public/mt4_mql4; \
     ln -s $SCREENSHOTS $HOME/public/screenshots
 
 ADD nginx.conf /etc/nginx/nginx.conf
 
-USER $ROOT
+USER root
+#------ install IBC -------------------------------------------
+#RUN set -e; \
+#    cd /home/rapier/ibc/ \
+#    chown -r $USER:$USER . \
+    #chmod +x *.sh */*.sh
+#    chmod +x twsstart.sh
 
 #-----------------------------------------------------------------------
 # home
@@ -145,4 +157,4 @@ WORKDIR $WINEPREFIX/drive_c
 ENTRYPOINT ["/bin/bash"]
 
 # /docker/boot.sh [account=demo|live] [strategy] [usd_exposure]
-CMD ["/docker/boot.sh", "demo", "test_connection", "1000"]
+CMD ["/docker/boot.sh", "981", "live", "risk-premia", "5000"]

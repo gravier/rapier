@@ -166,6 +166,8 @@ inline var PlusDM(int TimePeriod) { return PlusDM0(TimePeriod); }
 inline var PlusDM(vars Open,vars High,vars Low,vars Close,int TimePeriod) { return PlusDM1(Open,High,Low,Close,TimePeriod); }
 inline var EMA(vars Data,int TimePeriod) { return  EMA0(Data,TimePeriod); }
 inline var EMA(vars Data,var alpha) { return EMA1(Data,alpha); }
+inline var EMA(var In,var alpha) { return EMA2(In,alpha); }
+inline var EMA(var In,int TimePeriod) { return EMA3(In,TimePeriod); }
 inline var Stoch(int FastK_Period,int SlowK_Period,int SlowK_MAType,int SlowD_Period,int SlowD_MAType) 
 { return Stoch0(FastK_Period,SlowK_Period,SlowK_MAType,SlowD_Period,SlowD_MAType); }
 inline var Stoch(vars Open,vars High,vars Low,vars Close,int FastK_Period,int SlowK_Period,int SlowK_MAType,int SlowD_Period,int SlowD_MAType) 

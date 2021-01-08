@@ -4,9 +4,10 @@
 
 #include <default.c>
 
-#define PDIFF		(1<<0) 
+#define PDIFF	(1<<0) 
 #define PMINUS	(1<<1) 
-#define PVAL		(1<<2) 
+#define PVAL	(1<<2) 
+#define PDEV	0.25	// StdDev with 1/4 amplitude
 #define COLOR_AVG		0xee0000
 #define COLOR_DEV		0x888888
 #define COLOR_PROFIT	0x8888ff
@@ -27,8 +28,8 @@ void plotSeason(
 		lastseason = season;
 	} 
 
-	plotBar("StdDev",n,0,(value-value0)/4,DEV|BARS,COLOR_DEV);	
-	plotBar("Value",n,label,value-value0,AVG|BARS|LBL2,COLOR_AVG);	
+	plotBar("StdDev",n,0,(value-value0)*PDEV,DEV|BARS,COLOR_DEV);	
+	plotBar("Value",n,label,value-value0,AVG|BARS,COLOR_AVG);	
 
 	if(type&PDIFF) value0 = value;
 }
@@ -88,17 +89,17 @@ void plotPriceProfile(int bars,int type)
 	if(!bars) bars = 50;
 	set(PLOTNOW,PEEK); // peek in the future 
 	var vProfit;
-	int count;
-	for(count = 1; count < bars; count++) 
+	int n;
+	for(n = 1; n < bars; n++) 
 	{
-		if(type&PDIFF) 
-			vProfit = (price(-count-1)-price(-count))/PIP;
+		if((type&PDIFF) && type > 0)
+			vProfit = (price(-n-1)-price(-n))/PIP;
 		else
-			vProfit = (price(-count-1)-price(-1))/PIP;
-		if(type&PMINUS) 
+			vProfit = (price(-n-1)-price(-1))/PIP;
+		if((type&PMINUS) || type < 0) 
 			vProfit = -vProfit;
-		plotBar("StdDev",count,0,vProfit/4,DEV|BARS,COLOR_DEV);
-		plotBar("Price",count,count,vProfit,AVG|BARS|LBL2,COLOR_AVG);
+		plotBar("StdDev",n,0,vProfit*PDEV,DEV|BARS,COLOR_DEV);
+		plotBar("Price",n,n,vProfit,AVG|BARS|LBL2,COLOR_AVG);
 	}
 }
 
@@ -114,7 +115,7 @@ void plotTradeProfile(int bars)
 		if(!bars) bars = 50;
 	
 		var vWinMax = 0, vLossMax = 0;
-		for(all_trades) { // calculate minimum & maximum profit in pips
+		for(all_trades) if(TradeIsClosed) { // calculate minimum & maximum profit in pips
 			vWinMax = max(vWinMax,toPIP(TradeResult));
 			vLossMax = max(vLossMax,-toPIP(TradeResult));
 		}
@@ -127,7 +128,7 @@ void plotTradeProfile(int bars)
 			vStep = 10*(int)max(1.,(vWinMax+vLossMax)/bars/10);
 		
 		int n0 = ceil(vLossMax/vStep);
-		for(all_trades) 
+		for(all_trades) if(TradeIsClosed) 
 		{
 			var vResult = toPIP(TradeResult);
 			int n = floor(vResult/vStep);
@@ -137,6 +138,19 @@ void plotTradeProfile(int bars)
 	}
 }
 
+// plot a dot from the trade result
+void _plotDot(var X,var Y,var Step)
+{
+	if(!TradeIsClosed) return;
+	int n = floor(X);
+// set the x axis labels and range
+	plotBar("Profit",n,n*Step,0,AVG|BARS|LBL2,COLOR_PROFIT);
+	if(Y > 0)
+		plotGraph("Win",X,Y,DOT,GREEN);
+	else
+		plotGraph("Loss",X,Y,DOT,RED);
+}
+
 void plotMAEGraph(int bars)
 {
 	if(!is(TESTMODE)) return; 
@@ -144,36 +158,34 @@ void plotMAEGraph(int bars)
 	if(is(EXITRUN))
 	{
 		if(!bars) bars = 50;
-	
-		var vMaxMAE = 0;
-		for(all_trades) // calculate maximum MAE in pips
-			vMaxMAE = max(vMaxMAE,TradeMAE/PIP);
-		//printf("\nMaxMAE: %.0f",vMaxMAE);
-	
-		var vStep;
-		if(bars < 0) // bucket size in pips
-			vStep = -bars;
-		else
-			vStep = 10*(int)max(1.,vMaxMAE/bars/10);
-		printf("  Step: %.0f",vStep);
-		
+		var vMax = 0;
+		for(all_trades) if(TradeIsClosed) // calculate maximum MFE in pips
+			vMax = max(vMax,TradeMAE/PIP);
+		var Step = ifelse(bars < 0, -bars,
+			10*(int)max(1.,vMax/bars/10));
 		for(all_trades) 
-		{
-			var vResult = toPIP(TradeResult);
-			var vMAE = TradeMAE/PIP/vStep;
-			int n = floor(vMAE);
-			plotBar("Profit",n,n*vStep,0,AVG|BARS|LBL2,COLOR_PROFIT);
-			if(vResult > 0)
-				plotGraph("Win",vMAE,vResult,DOT,GREEN);
-			else
-				plotGraph("Loss",vMAE,vResult,DOT,RED);
-		}
+			_plotDot(TradeMAE/PIP/Step,toPIP(TradeProfit),Step);
 	}
 }
 
+void plotMFEGraph(int bars)
+{
+	if(!is(TESTMODE)) return; 
+	g->dwStatus |= PLOTSTATS;
+	if(is(EXITRUN))
+	{
+		if(!bars) bars = 50;
+		var vMax = 0;
+		for(all_trades) if(TradeIsClosed) // calculate maximum MFE in pips
+			vMax = max(vMax,TradeMFE/PIP);
+		var Step = ifelse(bars < 0, -bars,
+			10*(int)max(1.,vMax/bars/10));
+		for(all_trades) 
+			_plotDot(TradeMFE/PIP/Step,toPIP(TradeProfit),Step);
+	}
+}
 
 //bars > 0  Number of bars to plot. The more bars, the finer the resolution. 
-//
 //bars < 0  Step width of the MAE distribution in thousandths of percentage points of trade value (i.e. 0.001%). 
 //The smaller the step width, the finer the resolution. 
 
@@ -185,69 +197,21 @@ void plotMAEPercentGraph(int bars)
 	{
 		if(!bars) bars = 50;
 	
-		var vMaxMAE = 0;
-		for(all_trades) // calculate maximum MAE relative to open
-			vMaxMAE = max(vMaxMAE,(100.*TradeMAE/(TradePriceOpen)));
-		//printf("\nMaxMAE: %.0f",vMaxMAE);
+		var vMax = 0;
+		for(all_trades) if(TradeIsClosed) // calculate maximum MAE relative to open
+			vMax = max(vMax,100.*TradeMAE/TradePriceOpen);
 	
 		var vStep;
 		if(bars < 0) // bucket size in thousandths of percentage points (i.e. 0.001%)
 			vStep = (bars * (-1.) / (1000.));
 		else
-			vStep = max(0.05, roundto((vMaxMAE/bars),0.001));
-		printf("  Step: %.3f",vStep);
+			vStep = max(0.05, roundto(vMax/bars,0.001));
 		
-		for(all_trades) 
-		{
-			var vResult = (100*TradeProfit/(TradeUnits*TradePriceOpen));
-			var vMAE = (100.*TradeMAE/(TradePriceOpen))/vStep;
-			int n = floor(vMAE);
-			plotBar("Profit",n,n*vStep,0,AVG|BARS|LBL2,COLOR_PROFIT);
-			if(vResult > 0)
-				plotGraph("Win",vMAE,vResult,DOT,GREEN);
-			else
-				plotGraph("Loss",vMAE,vResult,DOT,RED);
-		}
+		for(all_trades) if(TradeIsClosed)  
+			_plotDot(100.*TradeMAE/TradePriceOpen/vStep,
+				100*TradeProfit/TradeLots/TradeUnits/TradePriceOpen,vStep);
 	}
 }
-
-void plotMFEGraph(int bars)
-{
-	if(!is(TESTMODE)) return; 
-	g->dwStatus |= PLOTSTATS;
-	if(is(EXITRUN))
-	{
-		if(!bars) bars = 50;
-	
-		var vMaxMFE = 0;
-		for(all_trades) // calculate maximum MFE in pips
-			vMaxMFE = max(vMaxMFE,TradeMFE/PIP);
-		//printf("\nMaxMAE: %.0f",vMaxMFE);
-	
-		var vStep;
-		if(bars < 0) // bucket size in pips
-			vStep = -bars;
-		else
-			vStep = 10*(int)max(1.,vMaxMFE/bars/10);
-		
-		for(all_trades) 
-		{
-			var vResult = toPIP(TradeResult);
-			var vMFE = TradeMFE/PIP/vStep;
-			int n = floor(vMFE);
-			plotBar("Profit",n,n*vStep,0,AVG|BARS|LBL2,COLOR_PROFIT);
-			if(vResult > 0)
-				plotGraph("Win",vMFE,vResult,DOT,GREEN);
-			else
-				plotGraph("Loss",vMFE,vResult,DOT,RED);
-		}
-	}
-}
-
-//bars > 0  Number of bars to plot. The more bars, the finer the resolution. 
-//
-//bars < 0  Step width of the MAE distribution in thousandths of percentage points of trade value (i.e. 0.001%). 
-//The smaller the step width, the finer the resolution. 
 
 void plotMFEPercentGraph(int bars)
 {
@@ -257,28 +221,19 @@ void plotMFEPercentGraph(int bars)
 	{
 		if(!bars) bars = 50;
 	
-		var vMaxMFE = 0;
-		for(all_trades) // calculate maximum MFE relative to open
-			vMaxMFE = max(vMaxMFE,(100.*TradeMFE/(TradePriceOpen)));
-		//printf("\nMaxMAE: %.0f",vMaxMAE);
+		var vMax = 0;
+		for(all_trades) if(TradeIsClosed) // calculate maximum MAE relative to open
+			vMax = max(vMax,100.*TradeMFE/TradePriceOpen);
 	
 		var vStep;
 		if(bars < 0) // bucket size in thousandths of percentage points (i.e. 0.001%)
 			vStep = (bars * (-1.) / (1000.));
 		else
-			vStep = max(0.05, roundto((vMaxMFE/bars),0.001));
-
-		for(all_trades) 
-		{
-			var vResult = (100*TradeProfit/(TradeUnits*TradePriceOpen));
-			var vMFE = (100.*TradeMFE/(TradePriceOpen))/vStep;
-			int n = floor(vMFE);
-			plotBar("Profit",n,n*vStep,0,AVG|BARS|LBL2,COLOR_PROFIT);
-			if(vResult > 0)
-				plotGraph("Win",vMFE,vResult,DOT,GREEN);
-			else
-				plotGraph("Loss",vMFE,vResult,DOT,RED);
-		}
+			vStep = max(0.05, roundto(vMax/bars,0.001));
+		
+		for(all_trades) if(TradeIsClosed)  
+			_plotDot(100.*TradeMFE/TradePriceOpen/vStep,
+				100*TradeProfit/TradeLots/TradeUnits/TradePriceOpen,vStep);
 	}
 }
 
@@ -291,7 +246,7 @@ void plotTradeGraphXY(int bars,int Nx,int Ny)
 	if(!bars) bars = 100;
 
 	var vMax = 0,vMin = 999999;
-	for(all_trades) { // calculate x range#
+	for(all_trades) if(TradeIsClosed) { // calculate x range#
 		if(TradeVar[Nx] == 0.) continue;
 		vMax = max(vMax,TradeVar[Nx]);
 		vMin = min(vMin,TradeVar[Nx]);
@@ -303,7 +258,7 @@ void plotTradeGraphXY(int bars,int Nx,int Ny)
 	else
 		vStep = 10*(int)max(1.,(vMax-vMin)/bars/10);
 	
-	for(all_trades) 
+	for(all_trades) if(TradeIsClosed)
 	{
 		if(TradeVar[Nx] == 0.) continue;
 		var vResult = ifelse(Ny == -1,TradeProfit,TradeVar[Ny]);
@@ -413,12 +368,12 @@ void plotCorrelogram(var Val,int lag)
 		plotCorrel(1,lag);
 }
 
-void plotHeatmap(const char* name,var* Data,int Rows,int Cols,var Scale,...)
+void plotHeatmap(const char* name,var* Data,int Rows,int Cols)
 {
 	if(is(TRADEMODE) || (is(TRAINMODE) && mode(PARAMETERS|RULES))) return; 
-	setf(g->dwStatus,PLOTSTATS);
 	if(!is(EXITRUN)) return;
-	if(Scale == 0.) Scale = 1;
+	//if(Scale == 0.) 
+	var Scale = 1;
 	int i,j;
 	if(!name) name = "Heatmap";
 	if(isf(PlotMode,PL_FILE)) {
@@ -450,6 +405,66 @@ void plotHistogram(string Name,var Val,var Step,var Weight,int Color)
 	plotBar(Name,Bucket,Step*Bucket,Weight,SUM+BARS+LBL2,Color);	
 }
 
+int plotProfitHack(int period)
+{
+    static var Profit = 0;
+    static var PeriodProfit = 0;
+    
+    if(is(INITRUN)) Profit = Equity;
+    if(period == 1) {
+        PeriodProfit = Equity - Profit;
+        Profit = Equity;
+    } else if(period == 2) 
+        PeriodProfit = 0;
+    plot("Win",max(0,PeriodProfit),NEW|BARS,ColorEquity);
+    plot("Loss",min(0,PeriodProfit),BARS,ColorDD);
+    
+    if(PeriodProfit > 0 and period == 1) return 1;
+}
+
+int plotDayProfitHack()
+{
+    int period = 0;
+    if(day(0) != day(1))
+        period = 1;
+    else if(hour() >= 16)
+        period = 2;
+    int count = plotProfitHack(period);
+    return count;
+}
+
+int plotWeekProfitHack()
+{
+    int period = 0;
+    if(week(0) != week(1))
+        period = 1;
+    else if(dow() >= THURSDAY)
+        period = 2;
+    int count = plotProfitHack(period);
+    return count;
+}
+
+int plotMonthProfitHack()
+{
+    int period = 0;
+    if(month(0) != month(1))
+        period = 1;
+    else if(day() >= 20)
+        period = 2;
+    int count = plotProfitHack(period);
+    return(count);
+}
+
+int plotQuarterProfitHack()
+{
+    int period = 0;
+    if(month(0) != month(1) && month()%3 == 1)
+        period = 1;
+    else if(month()%3 == 0)
+        period = 2;
+    int count = plotProfitHack(period);
+    return count;
+}
 
 ///////////////////////////////////////////////
 //#define PTEST

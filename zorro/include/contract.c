@@ -213,8 +213,13 @@ var contractVega(int Type,int Days,var Price,var HistVol,var RiskFree,var Strike
 
 var contractUnderlying()
 {
-	if(Live || !Contracts) return priceClose(0);
-	else return Contracts->fUnl;
+	if(Contracts) {
+		if(Contracts->fUnl == 0) 
+			contractPrice(Contracts);
+		if(Contracts->fUnl > 0) 
+			return Contracts->fUnl;
+	}
+	return priceClose(0);
 }
 
 // open a duplicate of a closed contract
@@ -350,6 +355,18 @@ var comboRisk()
 	return comboRisk(1);
 }
 
+var comboProfit(var Price,int Sign)
+{
+	int i = comboLegs();
+	var Profit = 0;
+	for(; i>0; i--) {
+		int N = Sign*comboLeg(i);
+		CONTRACT* C = comboContract(i);
+		Profit += contractProfitN(C,N,Price);
+	}
+	return Profit;
+}
+
 var comboPremium(int Sign)
 {
 	COMBO *Combo = ThisCombo;
@@ -448,6 +465,65 @@ var comboMargin(int Sign, int AssetType)
 		return Price/Legs;
 		}
 	}
+}
+
+///////////////////////////////////////////////////////////////////////
+#define CDIVIDEND	0.01
+#define CRISKFREE	0.01
+#define CPOINTS	300
+
+void plotContract(int N,CONTRACT* C,var HistVol,var Min,var Max,int Days,int Modus)
+{
+	static var Values[CPOINTS];
+	PlotScale = 10;
+	PlotLabels = CPOINTS/30;
+	var Step = (Max-Min)/CPOINTS;
+	Min = round(Min);
+	if(!Multiplier) Multiplier = 100;
+	int Exp = 0, ExpO;
+	if(C) {
+		ExpO = C->Expiry;
+		Exp = contractDays(C);
+		if(!Days) Days = max(Exp/2,1);
+		if(Modus == 2) // set shorter expiry
+			C->Expiry = max(Exp-Days,1);
+	}
+	string Title = "At Expiry"; 
+	int Type = LINE, Color = BLUE;
+	if(Modus == 2) {
+		Title = strf("At %i Days",Days); Color = RED;
+	} else if(Modus == 3) {
+		Title = "Delta"; Type |= AXIS2; Color = GREEN;
+	}
+
+	int i;
+	for(i=0; i<CPOINTS; i++)
+	{
+		if(N == 0 || C == 0 || Modus == 0) {
+			Values[i] = 0;
+			plotBar("#Zero",i,0,0,LINE,BLACK);
+			continue;
+		} 
+		var Price = Min + i*Step;
+		if(Price > Max) break;
+		if(Modus == 1 || (Modus == 2 && Days >= Exp))
+			Values[i] += Multiplier*contractProfitN(C,N,Price);
+		else if(Modus == 2)
+			Values[i] += Multiplier*N*(contractVal(C,Price,HistVol,CDIVIDEND,CRISKFREE) 
+				- ifelse(N>0,C->fAsk,C->fBid));
+		else if(Modus == 3)
+			Values[i] += N*contractDelta(C->Type,Exp,Price,HistVol,CRISKFREE,C->fStrike);
+		plotBar(Title,i,Price,Values[i],Type,Color);
+	}
+	if(C) C->Expiry = ExpO;
+}
+
+void plotCombo(var HistVol,var Min,var Max,int Days,int Modus)
+{
+	int i;
+	plotContract(0,0,0,0,0,0,0); 	// reset arrays
+	for(i=0; i<comboLegs(); i++)
+		plotContract(comboLeg(i+1),comboContract(i+1),HistVol,Min,Max,Days,Modus);
 }
 
 ///////////////////////////////////////////////////////////////////////

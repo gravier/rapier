@@ -1,0 +1,4 @@
+Name,Price,Spread,RollLong,RollShort,PIP,PIPCost,MarginCost,Leverage,LotAmount,Commission,Symbol
+GLD,180,0.01,0,0,0.01,0.01,0,1,1,0.005,*-STK-SMART-USD 
+TLT,170,0.01,0,0,0.01,0.01,0,1,1,0.005,*-STK-SMART-USD 
+VTI,160,0.01,0,0,0.01,0.01,0,1,1,0.005,*-STK-SMART-USD 

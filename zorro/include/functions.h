@@ -223,7 +223,7 @@ C var F(qnorm)(var x);
 C var F0(sign)(var a);
 C int F1(sign)(int a);
 C var F0(ifelse)(BOOL c,var a,var b);
-C int F1(ifelse)(BOOL c,var a,int b);
+C int F1(ifelse)(BOOL c,int a,int b);
 C char* F2(ifelse)(BOOL c,char* a,char* b);
 C var F0(clamp)(var a,var l,var h);
 C var F1(clamp)(int a,int l,int h);
@@ -457,8 +457,8 @@ C var F(BBOsc)(vars Data,int Period,var NbDev,int MAType);
 C var F(Butterworth)(vars Data,int Cutoff);
 C var F(CGOsc)(vars Data,int Period);
 C var F(CI)(int TimePeriod);
-C var F(ChandelierLong)(int TimePeriod,var Multipl);
-C var F(ChandelierShort)(int TimePeriod,var Multipl);
+C var F(ChandelierLong)(int TimePeriod,var Factor);
+C var F(ChandelierShort)(int TimePeriod,var Factor);
 C var F(Chikou)(int Shift);
 C var F(Coral)(vars Data);
 C var F(DCOsc)(vars Data,int Period);
@@ -573,7 +573,7 @@ C var F1(distribute)(var* Weights,var* Data,int Length,int N,var Limit);
 
 // 1.88
 C int F(orderCVD)(T2* Quotes,int N,var Distance);
-C void F(sortRank)(var* Rank,var* Data,int N);
+C int* F(sortRank)(var* Rank,var* Data,int N);
 C int F(utm)(DATE Time);
 C char* F(file_next)(const char* Filter);
 C int F(orderUpdate)(const char* Name,int Handle);
@@ -665,6 +665,18 @@ C var F(knapsack)(int* Items,var* Prices,var* Values,int N,var Budget,var Cap);
 C void F(plotText)(const char* Name,var X,var Y,const char* Text,int Style,int Color);
 C var F(OBV)(var* Data,var Volume);
 C int F(invalid)(var V);
+
+C void F(plotChart)(const char* FileName);
+C TRADE* F(enterTrade)(TRADE*);
+C int F(ignore)(int ErrNum);
+C var F(SMAP)(vars Data,int Period);
+C var F2(EMA)(var In,var alpha);
+C var F3(EMA)(var In,int TimePeriod);
+C var F(correl)(vars Data,int Length,void* Func);
+C var F(CTI)(vars Data,int Length);
+C var F(CCYI)(vars Data,int Length);
+C var F(CCYIR)(vars Data,int Length);
+C var F(CCYIState)(vars Data,int Length,var Threshold);
 
 // new functions at the end, add to func_list, chm idx, npp, funclist.htm.
 #undef F
